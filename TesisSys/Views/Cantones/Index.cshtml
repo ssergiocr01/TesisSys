@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Provincias.Nombre)
+                Provincia
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -34,7 +34,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
-                <td>
+                <td>                    
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
@@ -54,13 +54,45 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.1/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/colreorder/1.1.1/js/dataTables.colReorder.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/colvis/1.1.0/js/dataTables.colVis.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="dataTables.filter.range.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.table').dataTable({
+            var table = $('.table').dataTable({
                 "dom": 'Rlfrtip',
-                "dom": 'C<"clear">lfrtip'
+                "dom": 'C<"clear">lfrtip',
+                responsive: true,
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
             });
-            var tt = new $.fn.dataTable.TableTools(table); $(tt.fnContainer()).insertBefore('div.dataTables_wrapper');
+
+            $('#min, #max').keyup(function () {
+                table.draw();
+            });
+
+            
         });
     </script>
 }
