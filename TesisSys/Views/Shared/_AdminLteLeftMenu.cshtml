@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">HEADER</li>
+            <li class="@Url.IsLinkActive("Index", "Home")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i> <span>Inicio</span></a>
+            </li>
+            <li class="@Url.IsLinkActive("About", "Home")">
+                <a href="@Url.Action("About", "Home")"><i class="fa fa-question"></i><span>Acerca De..</span></a>
+            </li>
+            <li class="@Url.IsLinkActive("Contact", "Home")">
+                <a href="@Url.Action("Contact", "Home")"><i class="fa fa-phone"></i><span>Contacto</span></a>
+            </li>
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
