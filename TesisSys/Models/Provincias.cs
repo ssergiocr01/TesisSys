@@ -20,6 +20,7 @@ namespace TesisSys.Models
 
         [Required]
         [StringLength(50)]
+        [Display(Name ="Provincia")]
         public string Nombre { get; set; }
 
         public bool? Estado { get; set; }

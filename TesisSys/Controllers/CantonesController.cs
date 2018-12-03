@@ -22,13 +22,15 @@ namespace TesisSys.Controllers
         }
 
         // GET: Cantones/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? ProvinciaID, int? CantonID)
         {
-            if (id == null)
+            Cantones cantones = db.Cantones.Find(ProvinciaID, CantonID);
+
+            if (cantones == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cantones cantones = db.Cantones.Find(id);
+            
             if (cantones == null)
             {
                 return HttpNotFound();
@@ -40,7 +42,7 @@ namespace TesisSys.Controllers
         public ActionResult Create()
         {
             ViewBag.ProvinciaID = new SelectList(db.Provincias, "ProvinciaID", "Nombre");
-            return View();
+            return PartialView();
         }
 
         // POST: Cantones/Create
@@ -92,13 +94,14 @@ namespace TesisSys.Controllers
         }
 
         // GET: Cantones/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? ProvinciaID, int? CantonID)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cantones cantones = db.Cantones.Find(id);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            Cantones cantones = db.Cantones.Find(ProvinciaID, CantonID);
+
             if (cantones == null)
             {
                 return HttpNotFound();
@@ -109,9 +112,9 @@ namespace TesisSys.Controllers
         // POST: Cantones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int ProvinciaID, int CantonID)
         {
-            Cantones cantones = db.Cantones.Find(id);
+            Cantones cantones = db.Cantones.Find(ProvinciaID, CantonID);
             db.Cantones.Remove(cantones);
             db.SaveChanges();
             return RedirectToAction("Index");

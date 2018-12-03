@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TesisSys.Models.Provincias>
+﻿@using TesisSys.Helpers;
+@model IEnumerable<TesisSys.Models.Provincias>
 
 @{
     ViewBag.Title = "Provincias";
@@ -6,10 +7,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    @Html.ActionLink("Crear Provincia", "Create", new { }, new { @class = "btn btn-primary" })
-</p>
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Lista de Provincias</strong>
+    </div>
+</div>
 
 <table class="table table table-striped table-hover">
     <thead>
@@ -20,7 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th>Opciones</th>
+            <th>
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Agregar Cantón", "Create", "Provincias", routeValues: new { ProvinciaID = ViewBag.ProvinciaID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -34,9 +46,12 @@
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <th>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.ProvinciaID }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Detalles", "Details", new { id = item.ProvinciaID }, new { @class = "btn btn-info" })
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ProvinciaID }, new { @class = "btn btn-danger" })
+                    <div class="pull-right">
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Provincias", routeValues: new { id = item.ProvinciaID }, htmlAttributes: new { data_modal = "", @class = "btn btn-warning" })
+                        &nbsp;
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Eliminar", "Delete", "Provincias", routeValues: new { id = item.ProvinciaID }, htmlAttributes: new { data_modal = "", @class = "btn btn-danger" })
+
+                    </div>
                 </th>
             </tr>
         }
@@ -49,13 +64,45 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.1/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/colreorder/1.1.1/js/dataTables.colReorder.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/colvis/1.1.0/js/dataTables.colVis.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="dataTables.filter.range.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.table').dataTable({
+            var table = $('.table').dataTable({
                 "dom": 'Rlfrtip',
-                "dom": 'C<"clear">lfrtip'
+                "dom": 'C<"clear">lfrtip',
+                responsive: true,
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
             });
-            var tt = new $.fn.dataTable.TableTools(table); $(tt.fnContainer()).insertBefore('div.dataTables_wrapper');
+
+            $('#min, #max').keyup(function () {
+                table.draw();
+            });
+
+
         });
     </script>
 }

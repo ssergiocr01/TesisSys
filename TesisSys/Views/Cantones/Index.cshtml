@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TesisSys.Models.Cantones>
+﻿@using TesisSys.Helpers;
+@model IEnumerable<TesisSys.Models.Cantones>
 
 @{
     ViewBag.Title = "Cantones";
@@ -6,9 +7,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    @Html.ActionLink("Crear Canton", "Create", new { }, new { @class = "btn btn-primary" })
-</p>
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Lista de Cantones</strong>
+    </div>
+</div>
+
 <table class="table table table-striped table-hover">
     <thead>
         <tr>
@@ -21,7 +33,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th>Opciones</th>
+            <th>
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Agregar Cantón", "Create", "Cantones", routeValues: new { CantonID = ViewBag.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -34,13 +48,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
-                <td>                    
+                <td>
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Details", "Details", new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, new { @class = "btn btn-info" })
-                    @Html.ActionLink("Delete", "Delete", new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, new { @class = "btn btn-danger" })
+                    <div class="pull-right">
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Cantones", routeValues: new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-warning" })
+                        &nbsp;
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Eliminar", "Delete", "Cantones", routeValues: new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-danger" })
+
+                    </div>
                 </td>
             </tr>
         }
@@ -92,7 +109,7 @@
                 table.draw();
             });
 
-            
+
         });
     </script>
 }

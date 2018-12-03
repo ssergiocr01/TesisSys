@@ -17,6 +17,7 @@ namespace TesisSys.Models
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name ="Provincia")]
         public int ProvinciaID { get; set; }
 
         [Key]
@@ -26,6 +27,7 @@ namespace TesisSys.Models
 
         [Required]
         [StringLength(50)]
+        [Display(Name ="Cantón")]
         public string Nombre { get; set; }
 
         public bool? Estado { get; set; }
