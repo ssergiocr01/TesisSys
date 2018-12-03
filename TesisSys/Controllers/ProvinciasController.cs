@@ -20,14 +20,14 @@ namespace TesisSys.Controllers
             return View(db.Provincias.ToList());
         }
 
-        // GET: Provincias/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Provincias provincias = db.Provincias.Find(id);
+            Provincias provincias = db.Provincias.Where(p => p.ProvinciaID == id).Include(p => p.Cantones).Single();
             if (provincias == null)
             {
                 return HttpNotFound();
@@ -38,7 +38,7 @@ namespace TesisSys.Controllers
         // GET: Provincias/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Provincias/Create
@@ -55,7 +55,7 @@ namespace TesisSys.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(provincias);
+            return PartialView("Create", provincias);
         }
 
         // GET: Provincias/Edit/5
@@ -70,7 +70,7 @@ namespace TesisSys.Controllers
             {
                 return HttpNotFound();
             }
-            return View(provincias);
+            return PartialView("Edit", provincias);
         }
 
         // POST: Provincias/Edit/5
@@ -84,9 +84,11 @@ namespace TesisSys.Controllers
             {
                 db.Entry(provincias).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Url.Action("Index", "Provincias");
+                return Json(new { success = true, url = url });
+                //return RedirectToAction("Index");
             }
-            return View(provincias);
+            return PartialView("Edit", provincias);
         }
 
         // GET: Provincias/Delete/5
@@ -101,7 +103,7 @@ namespace TesisSys.Controllers
             {
                 return HttpNotFound();
             }
-            return View(provincias);
+            return PartialView("Delete", provincias);
         }
 
         // POST: Provincias/Delete/5
@@ -112,7 +114,10 @@ namespace TesisSys.Controllers
             Provincias provincias = db.Provincias.Find(id);
             db.Provincias.Remove(provincias);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            string url = Url.Action("Index", "Provincias");
+            return Json(new { success = true, url = url });
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

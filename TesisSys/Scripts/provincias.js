@@ -7,8 +7,8 @@ $(function () {
         // hide dropdown if any (this is used wehen invoking modal from link in bootstrap dropdown )
         //$(e.target).closest('.btn-group').children('.dropdown-toggle').dropdown('toggle');
 
-        $('#myModalContent').load(this.href, function () {
-            $('#myModal').modal({
+        $('#myModalProvincia').load(this.href, function () {
+            $('#myProvincia').modal({
                 /*backdrop: 'static',*/
                 keyboard: true
             }, 'show');
@@ -26,10 +26,10 @@ function bindForm(dialog) {
             data: $(this).serialize(),
             success: function (result) {
                 if (result.success) {
-                    $('#myModal').modal('hide');
+                    $('#myProvincia').modal('hide');
                     $('#replacetarget').load(result.url); //  Load data from the server and place the returned HTML into the matched element
                 } else {
-                    $('#myModalContent').html(result);
+                    $('#myModalProvincia').html(result);
                     bindForm(dialog);
                 }
             }

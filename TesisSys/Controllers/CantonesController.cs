@@ -24,8 +24,7 @@ namespace TesisSys.Controllers
         // GET: Cantones/Details/5
         public ActionResult Details(int? ProvinciaID, int? CantonID)
         {
-            Cantones cantones = db.Cantones.Find(ProvinciaID, CantonID);
-
+            Cantones cantones = db.Cantones.Where(c => c.ProvinciaID == ProvinciaID && c.CantonID == CantonID).Include(c => c.Distritos).Single();
             if (cantones == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -36,6 +35,15 @@ namespace TesisSys.Controllers
                 return HttpNotFound();
             }
             return View(cantones);
+        }
+
+        [ChildActionOnly]
+        public ActionResult List(int id)
+        {
+            ViewBag.ProvinciaID = id;
+            var cantones = db.Cantones.Where(p => c.ProvinciaID == id);
+
+            return PartialView(cantones.ToList());
         }
 
         // GET: Cantones/Create

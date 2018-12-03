@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Agregar Cantón", "Create", "Cantones", routeValues: new { CantonID = ViewBag.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Agregar Cantón", "Create", "Cantones", routeValues: new { ProvinciaID = ViewBag.ProvinciaID, CantonID = ViewBag.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })
             </th>
         </tr>
     </thead>
@@ -54,6 +54,8 @@
                 <td>
                     <div class="pull-right">
                         @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Cantones", routeValues: new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-warning" })
+                        &nbsp;
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detalles", "Details", "Cantones", routeValues: new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-info" })
                         &nbsp;
                         @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Eliminar", "Delete", "Cantones", routeValues: new { ProvinciaID = item.ProvinciaID, CantonID = item.CantonID }, htmlAttributes: new { data_modal = "", @class = "btn btn-danger" })
 

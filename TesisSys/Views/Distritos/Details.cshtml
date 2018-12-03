@@ -1,4 +1,4 @@
-﻿@model TesisSys.Models.Cantones
+﻿@model TesisSys.Models.Distritos
 
 @{
     ViewBag.Title = "Details";
@@ -8,15 +8,15 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Cantones</h4>
+    <h4>Distritos</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Provincias.Nombre)
+            @Html.DisplayNameFor(model => model.Cantones.Nombre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Provincias.Nombre)
+            @Html.DisplayFor(model => model.Cantones.Nombre)
         </dd>
 
         <dt>
@@ -34,10 +34,10 @@
         <dd>
             @Html.DisplayFor(model => model.Estado)
         </dd>
-        <dt></dt>
-        <dd>@{ Html.RenderAction("List", "Distritos", new { ProvinciaID = Model.ProvinciaID, CantonID = Model.CantonID }); }</dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
